@@ -1,8 +1,9 @@
 package main
 
 import (
-	"falcon-go/falcon"
 	"fmt"
+
+	"github.com/bauser/falcon-go/falcon"
 )
 
 func main() {
