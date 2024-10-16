@@ -46,10 +46,14 @@ func Verify(message []byte, sig []byte, pubk []byte) bool {
 	return res == 0
 }
 
-func MakePubkey(prvk []byte) bool {
+func MakePubkey(prvk []byte) ([]byte, error) {
 	var pubk [1793]byte
 	res := C.dig_falcon_make_public(unsafe.Pointer(&pubk[0]), C.size_t(len(pubk)),
 		unsafe.Pointer(&prvk[0]), C.size_t(len(prvk)))
 
-	return res == 0
+	if res != 0 {
+		return nil, fmt.Errorf("falcon_make_public failed with error code %d", res)
+	}
+
+	return pubk[:], nil
 }
